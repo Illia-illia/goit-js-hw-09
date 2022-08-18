@@ -12,4 +12,8 @@ const fp = flatpickr(fpicker, {
   },
 });
 
-console.log(fp);
+const select = fp.selectedDates;
+const nowDate = new Date();
+
+console.log(new Date());
+console.log(fp.selectedDates);
