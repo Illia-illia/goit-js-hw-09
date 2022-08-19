@@ -19,8 +19,10 @@ btnStart.setAttribute('disabled', 'true');
 
 function onChoseTime(setDate) {
   const diference = setDate - nowDate;
+
   if (diference > 0) {
     btnStart.removeAttribute('disabled');
+
     return console.log(convertMs(diference));
   }
   Notify.failure('Please choose a date in the future');
@@ -51,7 +53,7 @@ function convertMs(ms) {
 //     const dataStart = Date.now();
 //     setInterval(() => {
 //       const currentTime = Date.now();
-//       console.log(currentTime + dataStart);
+//       console.log(dataStart - currentTime);
 //     }, 1000);
 //   },
 // };
