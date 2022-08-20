@@ -19,40 +19,36 @@ refs.form.addEventListener('submit', onBtnClick);
 function onBtnClick(e) {
   e.preventDefault();
 
-  let iterator = 0;
+  let position = 0;
   let delay = Number(refs.delayEl.value);
+
   const step = Number(refs.stepEl.value);
   const amount = Number(refs.amountEl.value);
-
-  if (step === 0) {
-    setTimeout(() => {
-      const intervalID = setInterval(() => {
-        iterator += 1;
-        createPromise(iterator, delay);
-        if (amount === iterator) {
-          return clearInterval(intervalID);
-        }
-      }, 0);
-    }, delay);
-  } else {
-    const intervalID = setInterval(() => {
-      iterator += 1;
-      createPromise(iterator, delay);
-      delay += step;
-      if (amount === iterator) {
-        return clearInterval(intervalID);
+  setTimeout(() => {
+    const intervalId = setInterval(() => {
+      if (amount === position) {
+        return clearInterval(intervalId);
       }
-    }, delay);
-  }
+      position += 1;
+      createPromise(position, delay)
+        .then(({ position, delay }) => {
+          Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+        })
+        .catch(({ position, delay }) => {
+          Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+        });
+      delay += step;
+    }, step);
+  }, delay);
 }
 
 function createPromise(position, delay) {
   const shouldResolve = Math.random() > 0.3;
-  if (shouldResolve) {
-    // Fulfill
-    Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
-  } else {
-    // Reject
-    Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
-  }
+  return new Promise((resolve, reject) => {
+    if (shouldResolve) {
+      resolve({ position, delay });
+    } else {
+      reject({ position, delay });
+    }
+  });
 }
