@@ -47,7 +47,6 @@ function onBtnClick() {
   const nowDate = Date.now();
   const difference = userDate - nowDate;
   onTimer(difference);
-  onTimer(difference);
 }
 
 function onTimer(value) {
