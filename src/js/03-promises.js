@@ -20,7 +20,6 @@ function onBtnClick(e) {
     amount: amountInput,
   } = e.currentTarget.elements;
 
-  let position = 0;
   let delay = Number(delayInput.value);
   let step = Number(stepInput.value);
   const amount = Number(amountInput.value);
@@ -30,13 +29,8 @@ function onBtnClick(e) {
     return Notify.warning('Write positive values');
   }
 
-  const intervalId = setInterval(() => {
-    if (amount === position) {
-      return clearInterval(intervalId);
-    }
-
-    position += 1;
-    createPromise(position, delay)
+  for (let pos = 1; pos <= amount; pos += 1) {
+    createPromise(pos, delay)
       .then(({ position, delay }) => {
         Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
       })
@@ -44,7 +38,25 @@ function onBtnClick(e) {
         Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
       });
     delay += step;
-  }, step);
+  }
+  // const intervalId = setInterval(() => {
+  //   if (position > 0) {
+  //     step = Number(stepInput.value);
+  //     console.log(position);
+  //   }
+  //   if (amount === position) {
+  //     return clearInterval(intervalId);
+  //   }
+  //   position += 1;
+  //   createPromise(position, delay)
+  //     .then(({ position, delay }) => {
+  //       Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+  //     })
+  //     .catch(({ position, delay }) => {
+  //       Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+  //     });
+  //   delay += step;
+  // }, step);
 }
 
 function createPromise(position, delay) {
