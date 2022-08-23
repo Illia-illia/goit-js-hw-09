@@ -21,7 +21,7 @@ function onBtnClick(e) {
   } = e.currentTarget.elements;
 
   let delay = Number(delayInput.value);
-  let step = Number(stepInput.value);
+  const step = Number(stepInput.value);
   const amount = Number(amountInput.value);
 
   if ((delay || amount) < 0) {
