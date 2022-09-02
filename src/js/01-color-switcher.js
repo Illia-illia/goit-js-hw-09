@@ -24,7 +24,7 @@ function onStopClick() {
 function startChangeBodyColor() {
   idColorChanger = setInterval(() => {
     refs.bodyBg.style.backgroundColor = getRandomHexColor();
-  }, 1000);
+  }, 10);
 }
 
 function stopChangeBodyColor() {
